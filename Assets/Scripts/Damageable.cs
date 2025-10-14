@@ -3,15 +3,19 @@ using UnityEngine;
 public class Damageable : MonoBehaviour
 {
 
-    [SerializeField] private int hp = 50;
+    [SerializeField] private float hp = 50;
+    public float Hp => hp;
 
-    public void DoDamages(int damages)
+    public void TakeDamages(float damages)
     {
-        Debug.Log("Damages !!!!!!!!! " +  damages);
+        //Debug.Log("Damages !!!!!!!!! " +  damages);
         hp -= damages;
         if(hp < 0)
         {
-            Debug.Log("je suis mort");
+            // Option 1 : objet decede rendu inactif, on peut le reactiver plus tard
+            gameObject.SetActive(false);
+            // Option 2 : l'objet est supprimé de la scene jusqu'au rechargement de la scene ou le respwan de l'objet
+            //Destroy(gameObject);
         }
     }
 }

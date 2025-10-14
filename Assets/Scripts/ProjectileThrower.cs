@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProjectileThrower : MonoBehaviour
 {
 
-    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float throwingInterval = 1.0f;
     [SerializeField] private Transform throwingPoint;
 
@@ -21,8 +21,15 @@ public class ProjectileThrower : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime >= throwingInterval) {
-            Instantiate(arrowPrefab, throwingPoint.position, throwingPoint.rotation, this.transform);
             elapsedTime = 0.0f;
+            
+            GameObject copy = Instantiate(projectilePrefab, throwingPoint.position, throwingPoint.rotation, this.transform);
+
+            if(copy.TryGetComponent(out DamageDealer dealer))
+            {
+                dealer.thrower = gameObject;
+            }
+
         }
         
     }
